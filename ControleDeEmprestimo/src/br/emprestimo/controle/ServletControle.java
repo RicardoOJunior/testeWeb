@@ -10,13 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet implementation class ServletControle
  */
 @WebServlet("/ServletControle")
 public class ServletControle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final WebsiteTitle myapp = new WebsiteTitle();
 	private Map<String,ICommand> cmds = new HashMap<String,ICommand>();
+	Logger logger = Logger.getLogger("ServletControle");
 
     /**
      * Default constructor. 
@@ -29,7 +33,7 @@ public class ServletControle extends HttpServlet {
      */
     private void initCommands() {
     	cmds.put("/home", new Home());
-    	cmds.put("/FormEmpresa", new Cmd_RegistrarEmprestimo());
+    	cmds.put("/FormLivro", new Cmd_RegistrarEmprestimo());
     	//cmds.put("IncluirLivro", new Cmd_IncluirLivro());
     	//cmds.put("ExcluirLivro", new Cmd_ExcluirLivro());
    	}
@@ -37,8 +41,14 @@ public class ServletControle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String path = request.getRequestURI().substring(request.getContextPath().length());
+		String parametro = request.getParameter("acao");
+		ICommand acao = null;
+		logger.info(path);
+		logger.info(parametro);
+		       
+        request.setAttribute("myapp", myapp);
+		
 	}
 
 	/**

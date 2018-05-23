@@ -36,7 +36,7 @@
 		<hr>
 		<div id="formulario2">
 
-			<form name="formLivroIncluir" method="post">
+			<form name="formLivroIncluir" action="/ControleDeEmprestimo/ServletControle" method="post">
 				<table id="tabcampos">
 					<tr>
 						<td><label> Titulo:</label></td>

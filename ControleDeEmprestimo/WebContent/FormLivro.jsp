@@ -14,7 +14,7 @@
 <script type="text/javascript" language="javascript">
 	
 	function incluir() {
-		document.formLivroIncluir.acao.value = "IncluirLivro";
+		document.formLivroIncluir.acao.value = "CadastrarLivro";
 		document.formLivroIncluir.submit();
 	}
 	function consultar() {

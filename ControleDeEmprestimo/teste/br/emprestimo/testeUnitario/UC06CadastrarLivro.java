@@ -2,10 +2,16 @@ package br.emprestimo.testeUnitario;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.emprestimo.controle.Cmd_CadastrarLivro;
+import br.emprestimo.controle.Home;
+import br.emprestimo.controle.ICommand;
 import br.emprestimo.modelo.Livro;
 public class UC06CadastrarLivro {
 	
@@ -61,6 +67,12 @@ public class UC06CadastrarLivro {
 			//verificacao
 			assertEquals("ISBN invalido", e.getMessage());
 		}
+	}
+	public void CT05CadastrarLivro(){
+		//cenario
+		Map<String,ICommand> cmds = new HashMap<String,ICommand>();
+		cmds.put("/home", new Home());
+    	cmds.put("CadastrarLivro", new Cmd_CadastrarLivro());
 	}
 	
 }

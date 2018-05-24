@@ -26,15 +26,14 @@ public class ServletControle extends HttpServlet {
      * Default constructor. 
      */
     public ServletControle() {
-        // TODO Auto-generated constructor stub
+    	initCommands();
     }
     /**
      * instancia os comandos
      */
     private void initCommands() {
     	cmds.put("/home", new Home());
-    	cmds.put("/FormLivro", new Cmd_RegistrarEmprestimo());
-    	//cmds.put("IncluirLivro", new Cmd_IncluirLivro());
+    	cmds.put("CadastrarLivro", new Cmd_CadastrarLivro());
     	//cmds.put("ExcluirLivro", new Cmd_ExcluirLivro());
    	}
 	/**
@@ -44,18 +43,18 @@ public class ServletControle extends HttpServlet {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		String parametro = request.getParameter("acao");
 		ICommand acao = null;
-		logger.info(path);
-		logger.info(parametro);
+		logger.info("caminho = " + path);
+		logger.info("acao a ser executada = " + parametro);
 		request.setAttribute("myapp", myapp);
 		try {
-        	if (parametro != null) {
+			if (parametro != null) {
         		acao = cmds.get(parametro);
         		logger.info("achou o comando " + parametro);
         	}else{
         		logger.info("achou o " + path);
         		acao = cmds.get(path);
         	}
-			acao.execute(request, response);
+        	acao.execute(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,6 +69,8 @@ public class ServletControle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
 	}
-
+	
+	
 }

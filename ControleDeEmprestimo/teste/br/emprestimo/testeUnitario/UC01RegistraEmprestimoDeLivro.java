@@ -6,8 +6,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.emprestimo.modelo.Emprestimo;
+import br.emprestimo.modelo.EmprestimoDAO;
 import br.emprestimo.modelo.Livro;
 import br.emprestimo.modelo.Usuario;
+import br.emprestimo.servico.ConfiguraDB;
+import br.emprestimo.servico.FabricaDeConexoes;
 import br.emprestimo.servico.ServicoEmprestimo;
 
 import org.joda.time.DateTime;
@@ -54,7 +57,7 @@ public class UC01RegistraEmprestimoDeLivro {
 	@Test
 	public void CT04UC01FB_registrar_emprestimo_com_sucesso_validacao_da_data() {
 		//cenario
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
 		String dataEsperada = new DateTime().plusDays(8).toString(fmt);
 		//acao
 		emprestimo = servico.empresta(livro, usuario);
@@ -64,7 +67,7 @@ public class UC01RegistraEmprestimoDeLivro {
 	}
 	@Test
 	public void CT05UC01FB_registrar_emprestimo_com_data_invalida() {
-		assertTrue(emprestimo.validaData("29/03/2000"));
+		assertTrue(emprestimo.validaData("2000/03/29"));
 	}
 	
 	@Test
@@ -84,12 +87,41 @@ public class UC01RegistraEmprestimoDeLivro {
 	@Test
 	public void CT08UC01RegistrarEmprestimo_obtem_data_corrente(){
 		//cenario
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
 		String dataAtual = new DateTime().toString(fmt);
 		//acao
 		String dataEmprestimo = emprestimo.setDataEmprestimo();
 		assertTrue(dataAtual.equals(dataEmprestimo));
 	}
-	
+	@Test
+	public void CT05_conecta_db_com_sucesso() {
+		// cenario
+		String url = "jdbc:mysql://mysql8.db4free.net:3306/sceweb";
+		String driver = "com.mysql.jdbc.Driver";
+		String usuario = "alunos";
+		String senha = "alunosfatec";
+		// acao
+		ConfiguraDB configuraDB = new ConfiguraDB(url, driver, usuario, senha);
+		FabricaDeConexoes fabricaDeConexoes = new FabricaDeConexoes(configuraDB);
+		// verificacao
+		assertNotNull(fabricaDeConexoes.getConnection());
+	}
+
+	@Test
+	public void CT06_registra_emprestimo_com_sucesso() {
+		// cenario
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		Usuario umUsuario = ObtemUsuario.comDadosValidos();
+       	ServicoEmprestimo servico = new ServicoEmprestimo();
+		Emprestimo umEmprestimo = servico.empresta(umLivro, umUsuario);
+		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.exclui(0);
+		// acao
+		int resultadoObtido = emprestimoDAO.adiciona(umEmprestimo);
+		//verificacao
+		assertEquals (1, resultadoObtido);
+		
+
+	}
 	
 }

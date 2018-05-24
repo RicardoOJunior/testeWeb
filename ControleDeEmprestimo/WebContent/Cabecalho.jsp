@@ -10,7 +10,7 @@
 <body>
 	<div id= "titulo">
 		<a href="Index.jsp"><img alt="Centro Paula Souza" src="/ControleDeEmprestimo/Imagens/centropaulasouza.png"></a>
-		<h3>Faculdade de Tecnologia da Zona Leste - FATEC-ZL</h3>
+		<h3>Faculdade de Tecnologia - FATEC</h3>
 	</div>
 </body>
 </html>

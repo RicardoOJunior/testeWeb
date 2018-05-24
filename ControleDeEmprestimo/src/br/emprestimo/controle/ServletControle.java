@@ -46,14 +46,9 @@ public class ServletControle extends HttpServlet {
 		logger.info("caminho = " + path);
 		logger.info("acao a ser executada = " + parametro);
 		request.setAttribute("myapp", myapp);
+			
 		try {
-			if (parametro != null) {
-        		acao = cmds.get(parametro);
-        		logger.info("acao a ser executada= " + acao);
-        	}else{
-        		logger.info("caminho= " + path);
-        		acao = cmds.get(path);
-        	}
+			acao = cmds.get(parametro);
         	acao.execute(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

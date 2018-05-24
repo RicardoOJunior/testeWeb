@@ -46,11 +46,21 @@ public class ServletControle extends HttpServlet {
 		ICommand acao = null;
 		logger.info(path);
 		logger.info(parametro);
-		logger.info("chamou o comando registrar emprestimo");
-		if (parametro.equals("IncluirLivro")) {
-			logger.info("chamou o comando registrar emprestimo");
+		request.setAttribute("myapp", myapp);
+		try {
+        	if (parametro != null) {
+        		acao = cmds.get(parametro);
+        		logger.info("achou o comando " + parametro);
+        	}else{
+        		logger.info("achou o " + path);
+        		acao = cmds.get(path);
+        	}
+			acao.execute(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-        request.setAttribute("myapp", myapp);
+  
 		
 	}
 

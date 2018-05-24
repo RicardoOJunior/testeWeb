@@ -6,30 +6,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-
 import br.emprestimo.modelo.Livro;
 import br.emprestimo.modelo.LivroDAO;
 
-
-public class Cmd_CadastrarLivro implements ICommand{
-
+public class Cmd_ExcluirLivro implements ICommand{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String msg = null;
-		Logger logger = Logger.getLogger("Cmd_CadastrarLivro");
-		logger.info("chamou o comando cadastrar livro");
+		Logger logger = Logger.getLogger("Cmd_ExcluirLivro");
+		logger.info("chamou o comando excluir livro");
 		int rc =0; //codigo de retorno da inclusao no DB
 		LivroDAO livroDAO = new LivroDAO();
 		Livro livro = new Livro();
 		try {
 			logger.info("obtem o isbn da pagina = " + request.getParameter("txtISBN"));
 			livro.setIsbn(request.getParameter("txtISBN"));
-			
-			livro.setTitulo(request.getParameter("txtTitulo"));
-			livro.setAutor(request.getParameter("txtAutor"));
-			rc = livroDAO.adiciona(livro);
+			rc = livroDAO.exclui(livro.getIsbn());
 			if (rc == 1) {
-				msg = "Mensagem = Cadastro realizado com sucesso";
+				msg = "Mensagem = Exclusao realizada com sucesso";
 			}else{
 				msg = "Mensagem = Dados invalidos";
 			}
@@ -46,5 +40,4 @@ public class Cmd_CadastrarLivro implements ICommand{
 		}
 		
 	}
-
 }

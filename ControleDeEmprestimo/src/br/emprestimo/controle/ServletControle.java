@@ -34,7 +34,7 @@ public class ServletControle extends HttpServlet {
     private void initCommands() {
     	cmds.put("/home", new Home());
     	cmds.put("CadastrarLivro", new Cmd_CadastrarLivro());
-    	//cmds.put("ExcluirLivro", new Cmd_ExcluirLivro());
+    	cmds.put("ExcluirLivro", new Cmd_ExcluirLivro());
    	}
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,9 +49,9 @@ public class ServletControle extends HttpServlet {
 		try {
 			if (parametro != null) {
         		acao = cmds.get(parametro);
-        		logger.info("achou o comando " + parametro);
+        		logger.info("acao a ser executada= " + acao);
         	}else{
-        		logger.info("achou o " + path);
+        		logger.info("caminho= " + path);
         		acao = cmds.get(path);
         	}
         	acao.execute(request, response);
@@ -59,9 +59,7 @@ public class ServletControle extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-  
-		
-	}
+}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

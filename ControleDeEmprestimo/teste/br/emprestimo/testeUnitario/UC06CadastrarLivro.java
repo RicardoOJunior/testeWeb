@@ -13,6 +13,7 @@ import br.emprestimo.controle.Cmd_CadastrarLivro;
 import br.emprestimo.controle.Home;
 import br.emprestimo.controle.ICommand;
 import br.emprestimo.modelo.Livro;
+import br.emprestimo.modelo.LivroDAO;
 public class UC06CadastrarLivro {
 	
 	
@@ -68,11 +69,16 @@ public class UC06CadastrarLivro {
 			assertEquals("ISBN invalido", e.getMessage());
 		}
 	}
+	@Test
 	public void CT05CadastrarLivro(){
 		//cenario
-		Map<String,ICommand> cmds = new HashMap<String,ICommand>();
-		cmds.put("/home", new Home());
-    	cmds.put("CadastrarLivro", new Cmd_CadastrarLivro());
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		LivroDAO livroDAO = new LivroDAO();
+		//acao
+		int codigoRetorno = livroDAO.adiciona(umLivro);
+		//verificacao
+		assertEquals(1,codigoRetorno);
+		livroDAO.exclui(umLivro.getIsbn());
 	}
 	
 }
